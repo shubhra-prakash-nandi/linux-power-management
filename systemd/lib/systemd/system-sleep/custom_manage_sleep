@@ -1,0 +1,6 @@
+#!/bin/bash
+
+if [[ -x /etc/manage_sleep/manage_sleep.sh ]]
+then
+	/etc/manage_sleep/manage_sleep.sh "$1" "$2";
+fi;
