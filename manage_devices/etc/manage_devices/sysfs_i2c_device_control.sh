@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SCRIPT_DIR=`dirname "$0"`;
-SCRIPT_NAME=`basename "$0"`;
+SCRIPT_DIR=$(dirname "$0");
+SCRIPT_NAME=$(basename "$0");
 
 DEV_BUS_TYPE="i2c";
 SYSFS_DEV_BUS_PATH="/sys/bus/$DEV_BUS_TYPE";
@@ -82,7 +82,7 @@ while read SYSFS_DEV_PATH
 do
 	if [[ -e "$SYSFS_DEV_PATH/$SYSFS_DEV_NAME_ATTR_RELATIVE_PATH" ]]
 	then
-		DEV_NAME=`tail -1 "$SYSFS_DEV_PATH/$SYSFS_DEV_NAME_ATTR_RELATIVE_PATH"`;
+		DEV_NAME=$(tail -1 "$SYSFS_DEV_PATH/$SYSFS_DEV_NAME_ATTR_RELATIVE_PATH");
 	else
 		continue;
 	fi;
@@ -97,8 +97,8 @@ do
 	
 	if [[ "$DEV_PROPERTY_ATTR_RELATIVE_PATH" = "$SYSFS_DEV_DRIVER_RELATIVE_BIND_PATH" ]] || [[ "$DEV_PROPERTY_ATTR_RELATIVE_PATH" = "$SYSFS_DEV_DRIVER_RELATIVE_UNBIND_PATH" ]]
 	then
-		DEV_LINK=`readlink "$SYSFS_DEV_PATH/device" | tail -1`;
-		DEV_PROPERTY_ATTR_STATE=`basename "$DEV_LINK"`;
+		DEV_LINK=$(readlink "$SYSFS_DEV_PATH/device" | tail -1);
+		DEV_PROPERTY_ATTR_STATE=$(basename "$DEV_LINK");
 	fi;
 	
 	if [[ "$DEV_PROPERTY_ATTR_RELATIVE_PATH" != "" ]]
@@ -107,11 +107,11 @@ do
 		
 		if [[ -e "$DEV_PROPERTY_ATTR_PATH" ]] && [[ "$DEV_PROPERTY_ATTR_STATE" != "" ]]
 		then
-			CURR_DEV_PROPERTY_ATTR_STATE=`tail -1 "$DEV_PROPERTY_ATTR_PATH"`;
+			CURR_DEV_PROPERTY_ATTR_STATE=$(tail -1 "$DEV_PROPERTY_ATTR_PATH");
 			
 			if [[ "$DEV_PROPERTY_ATTR_STATE" != "$CURR_DEV_PROPERTY_ATTR_STATE" ]]
 			then
-				(cd `dirname "$DEV_PROPERTY_ATTR_PATH"`; echo "$DEV_PROPERTY_ATTR_STATE" > `basename "$DEV_PROPERTY_ATTR_PATH"`;)
+				(cd $(dirname "$DEV_PROPERTY_ATTR_PATH"); echo "$DEV_PROPERTY_ATTR_STATE" > $(basename "$DEV_PROPERTY_ATTR_PATH");)
 			fi;
 		fi;
 	else

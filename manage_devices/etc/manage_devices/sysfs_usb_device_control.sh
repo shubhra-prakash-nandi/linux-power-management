@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SCRIPT_DIR=`dirname "$0"`;
-SCRIPT_NAME=`basename "$0"`;
+SCRIPT_DIR=$(dirname "$0");
+SCRIPT_NAME=$(basename "$0");
 
 DEV_BUS_TYPE="usb";
 SYSFS_DEV_BUS_PATH="/sys/bus/$DEV_BUS_TYPE";
@@ -62,8 +62,8 @@ then
 	APPLY_ON_ALL_DEV="Y";
 else
 	APPLY_ON_ALL_DEV="N";
-	DEV_VENDOR_ID=`echo "$DEV_ID:" | cut -d":" -f1`;
-	DEV_PRODUCT_ID=`echo "$DEV_ID:" | cut -d":" -f2`;
+	DEV_VENDOR_ID=$(echo "$DEV_ID:" | cut -d":" -f1);
+	DEV_PRODUCT_ID=$(echo "$DEV_ID:" | cut -d":" -f2);
 	
 	if [[ "$DEV_VENDOR_ID" = "" ]] || [[ "$DEV_PRODUCT_ID" = "" ]]
 	then
@@ -88,14 +88,14 @@ while read SYSFS_DEV_PATH
 do
 	if [[ -e "$SYSFS_DEV_PATH/$SYSFS_DEV_ID_VENDOR_ATTR_RELATIVE_PATH" ]]
 	then
-		ID_VENDOR=`tail -1 "$SYSFS_DEV_PATH/$SYSFS_DEV_ID_VENDOR_ATTR_RELATIVE_PATH"`;
+		ID_VENDOR=$(tail -1 "$SYSFS_DEV_PATH/$SYSFS_DEV_ID_VENDOR_ATTR_RELATIVE_PATH");
 	else
 		continue;
 	fi;
 	
 	if [[ -e "$SYSFS_DEV_PATH/$SYSFS_DEV_ID_PRODUCT_ATTR_RELATIVE_PATH" ]]
 	then
-		ID_PRODUCT=`tail -1 "$SYSFS_DEV_PATH/$SYSFS_DEV_ID_PRODUCT_ATTR_RELATIVE_PATH"`;
+		ID_PRODUCT=$(tail -1 "$SYSFS_DEV_PATH/$SYSFS_DEV_ID_PRODUCT_ATTR_RELATIVE_PATH");
 	else
 		continue;
 	fi;
@@ -110,7 +110,7 @@ do
 	
 	if [[ "$DEV_PROPERTY_ATTR_RELATIVE_PATH" = "$SYSFS_DEV_DRIVER_RELATIVE_BIND_PATH" ]] || [[ "$DEV_PROPERTY_ATTR_RELATIVE_PATH" = "$SYSFS_DEV_DRIVER_RELATIVE_UNBIND_PATH" ]]
 	then
-		DEV_PROPERTY_ATTR_STATE=`basename "$SYSFS_DEV_PATH"`;
+		DEV_PROPERTY_ATTR_STATE=$(basename "$SYSFS_DEV_PATH");
 	fi;
 	
 	if [[ "$DEV_PROPERTY_ATTR_RELATIVE_PATH" != "" ]]
@@ -119,11 +119,11 @@ do
 		
 		if [[ -e "$DEV_PROPERTY_ATTR_PATH" ]] && [[ "$DEV_PROPERTY_ATTR_STATE" != "" ]]
 		then
-			CURR_DEV_PROPERTY_ATTR_STATE=`tail -1 "$DEV_PROPERTY_ATTR_PATH"`;
+			CURR_DEV_PROPERTY_ATTR_STATE=$(tail -1 "$DEV_PROPERTY_ATTR_PATH");
 			
 			if [[ "$DEV_PROPERTY_ATTR_STATE" != "$CURR_DEV_PROPERTY_ATTR_STATE" ]]
 			then
-				(cd `dirname "$DEV_PROPERTY_ATTR_PATH"`; echo "$DEV_PROPERTY_ATTR_STATE" > `basename "$DEV_PROPERTY_ATTR_PATH"`;)
+				(cd $(dirname "$DEV_PROPERTY_ATTR_PATH"); echo "$DEV_PROPERTY_ATTR_STATE" > $(basename "$DEV_PROPERTY_ATTR_PATH");)
 			fi;
 		fi;
 	else

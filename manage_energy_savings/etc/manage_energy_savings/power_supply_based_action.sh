@@ -2,10 +2,10 @@
 
 export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin";
 
-SCRIPT_DIR=`dirname $0`;
-SCRIPT_NAME=`basename $0`;
-DATE_TS=`date +"%Y%m%d%H%M%S"`;
-HOST=`hostname`;
+SCRIPT_DIR=$(dirname $0);
+SCRIPT_NAME=$(basename $0);
+DATE_TS=$(date +"%Y%m%d%H%M%S");
+HOST=$(hostname);
 
 PROGRAM_PID_FILE="$SCRIPT_DIR/$SCRIPT_NAME"".pid";
 LAST_PROGRAM_PID="";
@@ -19,7 +19,7 @@ DEFAULT_POWER_LEVEL="NORMAL";
 # Check last running instance of the program has ended before continuing
 if [[ -f "$PROGRAM_PID_FILE" ]]
 then
-	LAST_PROGRAM_PID=`cat $PROGRAM_PID_FILE`;
+	LAST_PROGRAM_PID=$(cat $PROGRAM_PID_FILE);
 fi;
 
 if [[ "$LAST_PROGRAM_PID" != "" ]]
@@ -40,7 +40,7 @@ echo "$$" > "$PROGRAM_PID_FILE";
 sleep $DELAY_TO_DETECT_RACE_CONDITION_SEC;
 
 # Check last stored PID is your PID to continue
-LAST_PROGRAM_PID=`cat $PROGRAM_PID_FILE`;
+LAST_PROGRAM_PID=$(cat $PROGRAM_PID_FILE);
 
 if [[ "$LAST_PROGRAM_PID" != "" ]] && [[ "$$" != "$LAST_PROGRAM_PID" ]]
 then
